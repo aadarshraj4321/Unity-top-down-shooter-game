@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
+
     private CharacterController characterController;
     private PlayerControls controls;
     private Animator animator;
@@ -20,6 +21,13 @@ public class PlayerMovement : MonoBehaviour
 
 
 
+    [Header("Running Data")]
+    [SerializeField] private float runningSpeed;
+    private bool isRunning;
+    private float speed;
+
+
+
     [Header("Aim Data")]
     [SerializeField] private Transform aimObject;
     [SerializeField] private LayerMask aimLayerMask;
@@ -28,24 +36,19 @@ public class PlayerMovement : MonoBehaviour
 
 
 
-
     private Vector2 moveInput;
     private Vector2 aimInput;
 
 
+
+
+
+
+
+
     private void Awake()
     {
-        controls = new PlayerControls();
-
-        //controls.Character.Fire.performed += context => shoot();
-
-        controls.Character.Movement.performed += context => moveInput = context.ReadValue<Vector2>();
-        controls.Character.Movement.canceled += context => moveInput = Vector2.zero;
-
-        controls.Character.Aim.performed += context => aimInput = context.ReadValue<Vector2>();
-        controls.Character.Aim.canceled += context => aimInput = Vector2.zero;
-
-
+        assignInput();
     }
 
 
@@ -53,6 +56,8 @@ public class PlayerMovement : MonoBehaviour
     {
         characterController = GetComponent<CharacterController>();
         animator = GetComponentInChildren<Animator>();
+
+        speed = playerWalkingSpeed;
     }
 
 
@@ -66,6 +71,18 @@ public class PlayerMovement : MonoBehaviour
 
 
 
+    private void AnimatorControllers()
+    {
+        float xVelocity = Vector3.Dot(movementDirection.normalized, transform.right);
+        float zVelocity = Vector3.Dot(movementDirection.normalized, transform.forward);
+
+        animator.SetFloat("xVelocity", xVelocity, .1f, Time.deltaTime);
+        animator.SetFloat("zVelocity", zVelocity, .1f, Time.deltaTime);
+
+        bool isRunningAnimation = isRunning && movementDirection.magnitude > 0;
+        animator.SetBool("isRunning", isRunningAnimation);
+    }
+
 
 
 
@@ -78,12 +95,16 @@ public class PlayerMovement : MonoBehaviour
 
         if (movementDirection.magnitude > 0)
         {
-            characterController.Move(movementDirection * Time.deltaTime * playerWalkingSpeed);
+            characterController.Move(movementDirection * Time.deltaTime * speed);
         }
     }
 
 
 
+    private void applyRunningMovement()
+    {
+
+    }
 
 
 
@@ -120,19 +141,37 @@ public class PlayerMovement : MonoBehaviour
 
 
 
-    private void AnimatorControllers()
+
+
+
+
+
+
+    #region New Input System
+    private void assignInput()
     {
-        float xVelocity = Vector3.Dot(movementDirection.normalized, transform.right);
-        float zVelocity = Vector3.Dot(movementDirection.normalized, transform.forward);
+        controls = new PlayerControls();
 
-        animator.SetFloat("xVelocity", xVelocity, .1f, Time.deltaTime);
-        animator.SetFloat("zVelocity", zVelocity, .1f, Time.deltaTime);
+        //controls.Character.Fire.performed += context => shoot();
+
+        controls.Character.Movement.performed += context => moveInput = context.ReadValue<Vector2>();
+        controls.Character.Movement.canceled += context => moveInput = Vector2.zero;
+
+        controls.Character.Running.performed += context =>
+        {
+            speed = runningSpeed;
+            isRunning = true;
+        };
+        controls.Character.Running.canceled += context =>
+        {
+            speed = playerWalkingSpeed;
+            isRunning = false;
+        };
+
+
+        controls.Character.Aim.performed += context => aimInput = context.ReadValue<Vector2>();
+        controls.Character.Aim.canceled += context => aimInput = Vector2.zero;
     }
-
-
-
-
-
 
     private void OnEnable()
     {
@@ -144,5 +183,7 @@ public class PlayerMovement : MonoBehaviour
     {
         controls.Disable();
     }
+
+    #endregion
 
 }

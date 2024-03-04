@@ -919,6 +919,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerWalkingSpeed: 2
   gravityScale: 9.81
+  runningSpeed: 5
   aimObject: {fileID: 285313415}
   aimLayerMask:
     serializedVersion: 2
