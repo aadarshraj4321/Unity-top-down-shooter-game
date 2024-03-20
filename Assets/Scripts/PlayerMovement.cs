@@ -86,6 +86,12 @@ public class PlayerMovement : MonoBehaviour
 
 
 
+    private void shoot()
+    {
+        animator.SetTrigger("Fire");
+    }
+
+
 
 
     private void applyMovement()
@@ -124,6 +130,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
     }
+
 
 
     private void applyGravity()
@@ -171,6 +178,8 @@ public class PlayerMovement : MonoBehaviour
 
         controls.Character.Aim.performed += context => aimInput = context.ReadValue<Vector2>();
         controls.Character.Aim.canceled += context => aimInput = Vector2.zero;
+
+        controls.Character.Fire.performed += context => shoot();
     }
 
     private void OnEnable()
