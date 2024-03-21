@@ -9,6 +9,7 @@ public class PlayerMovement : MonoBehaviour
     private CharacterController characterController;
     private PlayerControls controls;
     private Animator animator;
+    private Player player;
 
 
 
@@ -45,19 +46,15 @@ public class PlayerMovement : MonoBehaviour
 
 
 
-
-    private void Awake()
-    {
-        assignInput();
-    }
-
-
     private void Start()
     {
+        player = GetComponent<Player>();
         characterController = GetComponent<CharacterController>();
         animator = GetComponentInChildren<Animator>();
 
         speed = playerWalkingSpeed;
+
+        assignInput();
     }
 
 
@@ -86,14 +83,6 @@ public class PlayerMovement : MonoBehaviour
 
 
 
-    private void shoot()
-    {
-        animator.SetTrigger("Fire");
-    }
-
-
-
-
     private void applyMovement()
     {
         movementDirection = new Vector3(moveInput.x, 0, moveInput.y);
@@ -105,12 +94,6 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-
-
-    private void applyRunningMovement()
-    {
-
-    }
 
 
 
@@ -154,11 +137,10 @@ public class PlayerMovement : MonoBehaviour
 
 
 
-    #region New Input System
     private void assignInput()
     {
-        controls = new PlayerControls();
 
+        controls = player.controls;
         //controls.Character.Fire.performed += context => shoot();
 
         controls.Character.Movement.performed += context => moveInput = context.ReadValue<Vector2>();
@@ -179,20 +161,7 @@ public class PlayerMovement : MonoBehaviour
         controls.Character.Aim.performed += context => aimInput = context.ReadValue<Vector2>();
         controls.Character.Aim.canceled += context => aimInput = Vector2.zero;
 
-        controls.Character.Fire.performed += context => shoot();
     }
 
-    private void OnEnable()
-    {
-        controls.Enable();
-    }
-
-
-    private void OnDisable()
-    {
-        controls.Disable();
-    }
-
-    #endregion
 
 }
