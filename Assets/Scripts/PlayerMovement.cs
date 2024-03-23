@@ -108,7 +108,7 @@ public class PlayerMovement : MonoBehaviour
             aimLookingDirection.Normalize();
 
             transform.forward = aimLookingDirection;
-            aimObject.position = new Vector3(hitInfo.point.x, transform.position.y, hitInfo.point.z);
+            aimObject.position = new Vector3(hitInfo.point.x, transform.position.y + 1, hitInfo.point.z);
 
         }
 
