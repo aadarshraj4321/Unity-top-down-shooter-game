@@ -7,6 +7,8 @@ public class Player : MonoBehaviour
 
     public PlayerControls controls;
 
+    
+
 
     private void Awake()
     {

@@ -14,6 +14,8 @@ public class PlayerMovement : MonoBehaviour
 
 
 
+
+
     [Header("Movement Data")]
     [SerializeField] private float playerWalkingSpeed;
     [SerializeField] private float gravityScale = 9.81f;
