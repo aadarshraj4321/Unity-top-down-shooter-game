@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Animations.Rigging;
 
 public class WeaponVizualController : MonoBehaviour
 {
@@ -18,22 +19,34 @@ public class WeaponVizualController : MonoBehaviour
     [Header("Left HandIK")]
     [SerializeField] private Transform leftHand;
 
-    private Rigidbody db;
-
-
 
     private Animator anim;
-
+    private Rig rig;
 
     private void Start()
     {
         switchOnGuns(0);
         anim = GetComponentInChildren<Animator>();
+        rig = GetComponentInChildren<Rig>();
     }
 
 
 
     private void Update()
+    {
+        checkWeaponSwitch();
+
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            anim.SetTrigger("Reload");
+            rig.weight = 0;
+        }
+
+    }
+
+
+    private void checkWeaponSwitch()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
@@ -112,6 +125,8 @@ public class WeaponVizualController : MonoBehaviour
         }
         anim.SetLayerWeight(layerIndex, 1);
     }
+
+
 
 
 }
