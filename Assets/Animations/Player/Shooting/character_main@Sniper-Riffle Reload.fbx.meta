@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 046e3323d42257b49919959dfc63ccbc
+guid: f65ba5ec465d63c4484ca266c3644580
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -38,7 +38,7 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Weapon - Reload
+      name: Sniper-Riffle Reload
       takeName: mixamo.com
       internalID: -203655887218126122
       firstFrame: 0

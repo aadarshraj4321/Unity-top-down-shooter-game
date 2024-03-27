@@ -1625,6 +1625,7 @@ MonoBehaviour:
   - {fileID: 1902528821}
   - {fileID: 1727337199}
   - {fileID: 818541812}
+  rigIncreaseStep: 2.57
   leftHand: {fileID: 1005041221}
 --- !u!1 &1727337198
 GameObject:
@@ -2653,6 +2654,7 @@ GameObject:
   - component: {fileID: 919132148377504651}
   - component: {fileID: 919132148377504653}
   - component: {fileID: 919132148377504652}
+  - component: {fileID: 919132148377504654}
   m_Layer: 0
   m_Name: character_main
   m_TagString: Untagged
@@ -2745,6 +2747,18 @@ MonoBehaviour:
   - m_Rig: {fileID: 1366028684}
     m_Active: 1
   m_Effectors: []
+--- !u!114 &919132148377504654
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132148377504650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3049886fa7c6eca419cc572c12d47dd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &983552504526624660
 Transform:
   m_ObjectHideFlags: 0

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
 
@@ -14,7 +15,16 @@ public class WeaponVizualController : MonoBehaviour
     // [SerializeField] private Transform shotgun;
     // [SerializeField] private Transform sniper;
 
+
+
     private Transform currentGun;
+
+
+    [Header("Rig")]
+    [SerializeField]
+    private float rigIncreaseStep;
+    private bool rigShouldBeIncreased;
+
 
     [Header("Left HandIK")]
     [SerializeField] private Transform leftHand;
@@ -43,7 +53,25 @@ public class WeaponVizualController : MonoBehaviour
             rig.weight = 0;
         }
 
+        // if (Input.GetKey(KeyCode.K))
+        // {
+        //     rigShouldBeIncreased = true;
+        // }
+
+
+        if (rigShouldBeIncreased)
+        {
+            rig.weight += rigIncreaseStep * Time.deltaTime;
+            if (rig.weight >= 1)
+            {
+                rigShouldBeIncreased = false;
+            }
+        }
+
     }
+
+
+    public void returnRigWeightToOne() => rigShouldBeIncreased = true;
 
 
     private void checkWeaponSwitch()
